@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
-    AudioManager _audioManager;
+    private AudioManager _audioManager;
 
     public void Init(AudioManager audioManager)
     {

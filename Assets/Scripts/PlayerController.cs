@@ -1,21 +1,30 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    public float Speed { get => _speed; set { if (value > 5) _speed = value; } }
+    [SerializeField] private AudioClip _crashSound;
+    [SerializeField] private GameObject _deathPanel;
+
     private float _speed = 5;
-    [SerializeField] private AudioClip crashSound;
-    [SerializeField] private GameObject deathPanel;
     private Vector3 _dir = new Vector3(-1, 0, 0);
     private SpriteRenderer _spriteRenderer;
 
-    private void Start()
+    private void OnEnable()
+    {
+        GameManager.Instance.OnStartGame += StartGame;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.OnStartGame -= StartGame;
+    }
+
+    private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        enabled = false;
-        _dir = Vector3.zero;
     }
+
+    private void Start() => _dir = Vector3.zero;
 
     void Update()
     {
@@ -49,13 +58,24 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("deathZone"))
         {
-            deathPanel.SetActive(true);
-            GameManager.Instance.AudioManager.SetSound(crashSound);
+            _deathPanel.SetActive(true);
+            GameManager.Instance.AudioManager.SetSound(_crashSound);
             enabled = false;
         }
     }
 
-    public void StartGame()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Coin coin;
+
+        if (collision.TryGetComponent(out coin))
+        {
+            coin.Collected();
+            _speed += .15f;
+        }
+    }
+
+    private void StartGame()
     {
         enabled = true;
         _dir = new Vector3(-1, 0, 0);
