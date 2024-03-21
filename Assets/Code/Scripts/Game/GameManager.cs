@@ -51,16 +51,7 @@ public class GameManager : MonoBehaviour
         AudioManager.Silence(isPaused);
     }
 
-    public void Restart()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene(1);
-        OnStartGame?.Invoke();
-    }
+    public void StartGame() => SceneManager.LoadScene(1);
 
     public void QuitGame()
     {

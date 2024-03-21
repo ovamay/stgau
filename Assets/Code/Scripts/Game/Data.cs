@@ -15,6 +15,8 @@ public class Data : MonoBehaviour
 
         if (gameInfo != null)
             GameInfo = gameInfo;
+        else
+            GameInfo = new GameInfo();
     }
 
     public void Save()
@@ -32,5 +34,5 @@ public class GameInfo
     public Sprite BackgroundSprite;
     public Sprite CharacterSprite;
 
-    public List<int> Bought = new List<int>();
+    public List<int> Bought = new List<int>() { 0, 3 };
 }

@@ -9,22 +9,16 @@ public class PlayerController : MonoBehaviour
     private Vector3 _dir = new Vector3(-1, 0, 0);
     private SpriteRenderer _spriteRenderer;
 
-    private void OnEnable()
-    {
-        GameManager.Instance.OnStartGame += StartGame;
-    }
-
-    private void OnDisable()
-    {
-        GameManager.Instance.OnStartGame -= StartGame;
-    }
-
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start() => _dir = Vector3.zero;
+    private void Start()
+    {
+        _spriteRenderer.sprite = GameManager.Instance.Data.GameInfo.CharacterSprite;
+        _dir = Vector3.zero;
+    }
 
     void Update()
     {
@@ -73,14 +67,5 @@ public class PlayerController : MonoBehaviour
             coin.Collected();
             _speed += .15f;
         }
-    }
-
-    private void StartGame()
-    {
-        enabled = true;
-        _dir = new Vector3(-1, 0, 0);
-        transform.position = Vector3.zero;
-        _spriteRenderer.flipX = false;
-        _speed = 5;
     }
 }
