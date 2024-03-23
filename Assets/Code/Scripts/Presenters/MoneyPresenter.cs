@@ -7,9 +7,9 @@ public class MoneyPresenter : MonoBehaviour
 
     public ReactiveProperty<int> Money = new ReactiveProperty<int>(0);
 
-    private int _score = 0;
+    private int Cash => GameManager.Instance.Data.GameInfo.Money.Value;
 
-    private int Cash => GameManager.Instance.Data.GameInfo.Money;
+    private int _score = 0;
 
     public void OnEnable() => OnCoinCollected += AddMoney;
 
@@ -20,7 +20,10 @@ public class MoneyPresenter : MonoBehaviour
         Money.Value++;
         _score++;
 
-        GameManager.Instance.Data.GameInfo.Money++;
+        if (_score > GameManager.Instance.Data.GameInfo.Score.Value)
+            GameManager.Instance.Data.GameInfo.Score.Value = _score;
+
+        GameManager.Instance.Data.GameInfo.Money.Value++;
         GameManager.Instance.Data.Save();
     }
 
@@ -28,8 +31,8 @@ public class MoneyPresenter : MonoBehaviour
     {
         if (productData.Price <= Cash)
         {
-            GameManager.Instance.Data.GameInfo.Money -= productData.Price;
-            GameManager.Instance.Data.GameInfo.Bought.Add(productData.Id);
+            GameManager.Instance.Data.GameInfo.Money.Value -= productData.Price;
+            GameManager.Instance.Data.GameInfo.Bought.Add(productData);
             GameManager.Instance.Data.Save();
 
             return true;

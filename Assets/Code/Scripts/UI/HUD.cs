@@ -14,7 +14,8 @@ public class HUD : MonoBehaviour
 
     private void Start()
     {
-        _background.sprite = GameManager.Instance.Data.GameInfo.BackgroundSprite;
+        if (GameManager.Instance.Data.GameInfo.LocationData != null)
+        _background.sprite = GameManager.Instance.Data.GameInfo.LocationData.Sprite;
 
         _money.Money
             .Select(money => string.Format("Собрано монет: {0}", money))

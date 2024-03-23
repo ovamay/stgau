@@ -1297,6 +1297,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moneyText: {fileID: 1541944674}
+  _background: {fileID: 1347532924}
   _money: {fileID: 1798027788}
 --- !u!1 &1568624866
 GameObject:

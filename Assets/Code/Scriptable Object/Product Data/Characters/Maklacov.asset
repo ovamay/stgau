@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 950c4088e09ac444fa70e6b4a5ec9e78, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b4e17a21683b0e4a8fa5ec15070a6a7, type: 3}
   m_Name: Maklacov
   m_EditorClassIdentifier: 
-  _id: 2
-  _spriteOutline: {fileID: 21300000, guid: 5998a19c7467f6741b98c1664ef4bb85, type: 3}
-  _sprite: {fileID: 0}
+  _id: 1
+  _sprite: {fileID: 21300000, guid: 5998a19c7467f6741b98c1664ef4bb85, type: 3}
   _product: 1
   _price: 250
+  _spriteOutline: {fileID: 0}

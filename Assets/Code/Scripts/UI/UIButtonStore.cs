@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIStore : MonoBehaviour
+public class UIButtonStore : MonoBehaviour
 {
     [Header("Product Data")]
     [SerializeField] private ProductData _productData;
@@ -12,13 +12,22 @@ public class UIStore : MonoBehaviour
 
     private Button _button;
 
-    private void Start()
+    private GameInfo _gameInfo => GameManager.Instance.Data.GameInfo;
+
+    private void Awake()
     {
         _button = GetComponent<Button>();
+    }
+
+    private void Start()
+    {
+        foreach (var product in _gameInfo.Bought)
+            if (product.Id == _productData.Id && _grassPanel != null)
+                _grassPanel.SetActive(false);
 
         _button.onClick.AddListener(() =>
         {
-            if (_storePresenter.OnProductClick(_productData))
+            if (_storePresenter.OnProductClick(_productData) && _grassPanel != null)
                 _grassPanel.SetActive(false); 
         });
     }

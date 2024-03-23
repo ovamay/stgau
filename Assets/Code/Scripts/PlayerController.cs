@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _spriteRenderer.sprite = GameManager.Instance.Data.GameInfo.CharacterSprite;
+        _spriteRenderer.sprite = GameManager.Instance.Data.GameInfo.CharacterData.Sprite;
         _dir = Vector3.zero;
     }
 

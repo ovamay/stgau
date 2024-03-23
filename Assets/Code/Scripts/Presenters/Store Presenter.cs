@@ -13,26 +13,27 @@ public class StorePresenter : MonoBehaviour
 
     private void Start()
     {
-        if (_gameInfo.BackgroundSprite != null)
-            _backgroundSprite.sprite = _gameInfo.BackgroundSprite;
+        if (_gameInfo.LocationData.Sprite != null)
+            _backgroundSprite.sprite = _gameInfo.LocationData.Sprite;
 
-        if (_gameInfo.CharacterSprite != null)
-            _characterSprite.sprite = _gameInfo.CharacterSprite;
+        if (_gameInfo.CharacterData != null)
+            _characterSprite.sprite = _gameInfo.CharacterData.SpriteOutline;
     }
 
     public bool OnProductClick(ProductData productData)
     {
-        foreach (var id in _gameInfo.Bought)
-            if (id == productData.Id)
-                ChangeProduct(productData);
-            else
+        foreach (var product in _gameInfo.Bought)
+            if (product.Id == productData.Id)
             {
-                if (_moneyPresenter.TryBuy(productData))
-                {
-                    ChangeProduct(productData);
-                    return true;
-                }
+                ChangeProduct(productData);
+                return false;
             }
+
+        if (_moneyPresenter.TryBuy(productData))
+        {
+            ChangeProduct(productData);
+            return true;
+        }
 
         return false;
     }
@@ -41,13 +42,13 @@ public class StorePresenter : MonoBehaviour
     {
         if (productData.Product == Product.Character)
         {
-            GameManager.Instance.Data.GameInfo.CharacterSprite = productData.SpriteOutline;
-            _characterSprite.sprite = productData.Sprite;
+            GameManager.Instance.Data.GameInfo.CharacterData = (CharacterData)productData;
+            _characterSprite.sprite = _gameInfo.CharacterData.SpriteOutline;
         }
         else
         {
-            GameManager.Instance.Data.GameInfo.BackgroundSprite = productData.Sprite;
-            _characterSprite.sprite = productData.Sprite;
+            GameManager.Instance.Data.GameInfo.LocationData = (LocationData)productData;
+            _backgroundSprite.sprite = _gameInfo.LocationData.Sprite;
         }
 
         GameManager.Instance.Data.Save();
